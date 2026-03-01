@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kumar Manglam Pandey — Engineer & Researcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET & TOKENS ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0B0F1A;
+      --navy2:  #111827;
+      --navy3:  #1A2235;
+      --amber:  #C9963A;
+      --amber2: #E6B55A;
+      --cream:  #F2EAD8;
+      --cream2: #D6CCBA;
+      --gray:   #8A9BB5;
+      --white:  #FFFFFF;
+      --border: rgba(201,150,58,0.18);
+      --mono:   'IBM Plex Mono', monospace;
+      --serif:  'Cormorant Garamond', Georgia, serif;
+      --sans:   'IBM Plex Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--amber); color: var(--navy); }
+
+    /* ─── SCROLLBAR ───────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 2px; }
+
+    /* ─── NAV ─────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(11,15,26,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--amber);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+
+    /* ─── HERO ────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 7rem 4rem 6rem; /* top clears fixed nav; bottom protects scroll-hint */
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Chess-board background */
+    .chess-bg {
+      position: absolute; top: 0; right: 0;
+      width: 50%; height: 100%;
+      opacity: 0.04;
+      background-image:
+        repeating-conic-gradient(var(--amber) 0% 25%, transparent 0% 50%);
+      background-size: 60px 60px;
+      mask-image: linear-gradient(to left, rgba(0,0,0,0.8), transparent 80%);
+    }
+
+    /* Ambient glow */
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,150,58,0.07) 0%, transparent 70%);
+      top: 50%; right: 10%; transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .hero-inner { position: relative; z-index: 2; max-width: 820px; }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    h1.hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    h1.hero-name em {
+      font-style: italic;
+      color: var(--amber2);
+    }
+
+    .hero-statement {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream2);
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+      border-left: 2px solid var(--amber);
+      padding-left: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-tags {
+      display: flex; flex-wrap: wrap; gap: 0.7rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--gray);
+      text-transform: uppercase;
+    }
+
+    .hero-cta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 1s forwards;
+    }
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      background: var(--amber);
+      color: var(--navy);
+      text-decoration: none;
+      border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--amber2); transform: translateY(-2px); }
+    .btn-outline {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      border: 1px solid var(--border);
+      color: var(--gray);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-2px); }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 4rem;
+      font-family: var(--mono); font-size: 0.65rem;
+      color: var(--gray); letter-spacing: 0.15em;
+      text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.8rem;
+      opacity: 0; animation: fadeUp 0.8s 1.4s forwards;
+      pointer-events: none;
+    }
+    @media (max-height: 700px) { .scroll-hint { display: none; } }
+    .scroll-line {
+      width: 40px; height: 1px; background: var(--amber); display: block;
+    }
+
+    /* ─── SECTIONS SHARED ─────────────────────────────────────── */
+    section { padding: 7rem 4rem; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.8rem;
+    }
+    h2.section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+    h2.section-title em { font-style: italic; color: var(--amber2); }
+    .section-divider {
+      width: 60px; height: 1px;
+      background: var(--amber);
+      margin-bottom: 3.5rem;
+    }
+
+    /* ─── HEADSHOT ────────────────────────────────────────────── */
+    .headshot-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 3.5rem;
+    }
+    .headshot-frame {
+      position: relative;
+      width: 180px; height: 180px;
+      flex-shrink: 0;
+    }
+    .headshot-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 2px;
+      display: block;
+      filter: grayscale(20%) contrast(1.05);
+    }
+    /* Amber corner accent */
+    .headshot-frame::before {
+      content: '';
+      position: absolute;
+      top: -8px; left: -8px;
+      width: 60px; height: 60px;
+      border-top: 2px solid var(--amber);
+      border-left: 2px solid var(--amber);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .headshot-frame::after {
+      content: '';
+      position: absolute;
+      bottom: -8px; right: -8px;
+      width: 60px; height: 60px;
+      border-bottom: 2px solid var(--amber);
+      border-right: 2px solid var(--amber);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .headshot-placeholder {
+      width: 100%; height: 100%;
+      background: var(--navy3);
+      border: 1px dashed rgba(201,150,58,0.35);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.5rem;
+      border-radius: 2px;
+    }
+    .headshot-placeholder span {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+      text-align: center;
+      padding: 0 0.5rem;
+    }
+    .headshot-placeholder .ph-icon { font-size: 2rem; opacity: 0.4; }
+
+    /* ─── ABOUT ───────────────────────────────────────────────── */
+    #about { background: var(--navy2); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-body p {
+      font-size: 1.05rem;
+      color: var(--cream2);
+      margin-bottom: 1.3rem;
+      line-height: 1.8;
+    }
+    .about-body p strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+    .about-body p em { color: var(--amber2); font-style: italic; }
+    .about-aside { display: flex; flex-direction: column; gap: 2rem; }
+
+    .aside-card {
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      background: rgba(255,255,255,0.02);
+      position: relative;
+    }
+    .aside-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--amber);
+    }
+    .aside-card-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.8rem;
+    }
+    .aside-card p {
+      font-size: 0.9rem;
+      color: var(--cream2);
+      line-height: 1.7;
+    }
+    .prof-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .prof-list li {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--cream2);
+      padding-left: 1rem;
+      position: relative;
+    }
+    .prof-list li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--amber);
+    }
+    .prof-list li span { color: var(--gray); display: block; font-size: 0.68rem; }
+
+    /* ─── SKILLS ──────────────────────────────────────────────── */
+    #skills { background: var(--navy); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-card {
+      border: 1px solid var(--border);
+      padding: 2rem;
+      background: rgba(255,255,255,0.02);
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .skill-card:hover {
+      border-color: var(--amber);
+      transform: translateY(-4px);
+    }
+    .skill-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .skill-card h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+    .skill-tags-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-pill {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.6rem;
+      background: rgba(201,150,58,0.1);
+      color: var(--amber2);
+      border: 1px solid rgba(201,150,58,0.2);
+      border-radius: 2px;
+    }
+
+    /* ─── RESEARCH ────────────────────────────────────────────── */
+    #research { background: var(--navy2); }
+    .research-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .research-card {
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      background: rgba(255,255,255,0.02);
+      transition: border-color 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .research-card:hover { border-color: var(--amber); }
+    .research-card::after {
+      content: '';
+      position: absolute; bottom: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle at bottom right, rgba(201,150,58,0.08), transparent 70%);
+    }
+    .research-tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+    .research-card h3 {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
+    }
+    .research-card p {
+      font-size: 0.9rem;
+      color: var(--cream2);
+      line-height: 1.75;
+      margin-bottom: 1.2rem;
+    }
+    .research-link {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--amber);
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .research-link:hover { text-decoration: underline; }
+
+    /* ─── EXPERIENCE TIMELINE ─────────────────────────────────── */
+    #experience { background: var(--navy); }
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 8px;
+      width: 1px; height: calc(100% - 16px);
+      background: linear-gradient(to bottom, var(--amber), transparent);
+    }
+    .tl-item {
+      position: relative;
+      margin-bottom: 3.5rem;
+      padding-left: 2rem;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute; left: -2rem;
+      top: 8px;
+      width: 8px; height: 8px;
+      border: 1px solid var(--amber);
+      background: var(--navy);
+      border-radius: 50%;
+    }
+    .tl-date {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .tl-role {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+    .tl-company {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+    .tl-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .tl-bullets li {
+      font-size: 0.9rem;
+      color: var(--cream2);
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.65;
+    }
+    .tl-bullets li::before {
+      content: '–';
+      position: absolute; left: 0;
+      color: var(--amber);
+    }
+
+    /* ─── CHESS & PERSONAL ────────────────────────────────────── */
+    #personal { background: var(--navy2); }
+    .personal-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .chess-feature {
+      border: 1px solid var(--border);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Mini chess board decoration */
+    .mini-board {
+      position: absolute; top: 0; right: 0;
+      width: 120px; height: 120px;
+      opacity: 0.08;
+      background-image: repeating-conic-gradient(var(--amber) 0% 25%, transparent 0% 50%);
+      background-size: 20px 20px;
+    }
+    .chess-rating-display {
+      font-family: var(--mono);
+      font-size: 3.5rem;
+      font-weight: 500;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .chess-rating-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+    .chess-feature h3 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+    .chess-feature p {
+      font-size: 0.9rem;
+      color: var(--cream2);
+      line-height: 1.75;
+      margin-bottom: 1.2rem;
+    }
+    .chess-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .chess-badge {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--border);
+      color: var(--gray);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .chess-badge:hover { border-color: var(--amber); color: var(--amber); }
+
+    .hobbies-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .hobby-item {
+      display: flex; align-items: flex-start; gap: 1.2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hobby-item:last-child { border-bottom: none; }
+    .hobby-icon { font-size: 1.4rem; flex-shrink: 0; line-height: 1; margin-top: 0.15rem; }
+    .hobby-text h4 {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+    .hobby-text p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ─── CONTACT ─────────────────────────────────────────────── */
+    #contact {
+      background: var(--navy);
+      text-align: center;
+      padding: 8rem 4rem;
+    }
+    .contact-inner { max-width: 600px; margin: 0 auto; }
+    .contact-subtitle {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--cream2);
+      margin-bottom: 3rem;
+    }
+    .contact-links {
+      display: flex; justify-content: center;
+      flex-wrap: wrap; gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .contact-link {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      padding: 0.8rem 1.6rem;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .contact-link:hover { border-color: var(--amber); color: var(--amber); }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      background: var(--navy2);
+      padding: 1.5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    footer p {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+    }
+    footer span { color: var(--amber); }
+
+    /* ─── ANIMATIONS ──────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.5rem; }
+      #hero { padding: 6rem 1.5rem 5rem; }
+      .about-grid,
+      .research-grid,
+      .personal-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ──────────────────────────────────────────────── -->
+  <nav>
+    <a href="#hero" class="nav-logo">KMP</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#personal">Beyond Code</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── HERO ──────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="chess-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Engineer · Researcher · Thinker</p>
+      <h1 class="hero-name">
+        Kumar<br/>
+        <em>Manglam</em><br/>
+        Pandey
+      </h1>
+      <p class="hero-statement">
+        "Most engineers use AI as a black box.<br/>
+        I'm here to open it — and understand every layer inside."
+      </p>
+      <div class="hero-tags">
+        <span class="tag">AI/ML Research</span>
+        <span class="tag">Full-Stack Engineering</span>
+        <span class="tag">Systems Thinking</span>
+        <span class="tag">York University · MSc CS (AI)</span>
+        <span class="tag">Toronto, ON</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-primary">Get in touch</a>
+        <a href="KumarManglamPandey_Resume_v2.docx" class="btn-outline">Download Résumé</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span class="scroll-line"></span>
+      Scroll to explore
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ─────────────────────────────────────────────── -->
+  <section id="about">
+    <div class="section-label">01 — Who I Am</div>
+    <h2 class="section-title">A <em>Jack of All Trades</em><br/>who actually reads the manual.</h2>
+    <div class="section-divider"></div>
+
+    <!-- Headshot -->
+    <div class="headshot-wrap reveal">
+      <div class="headshot-frame">
+        <!-- Replace profile.jpg with your actual photo file -->
+        <img src="profile.jpg" alt="Kumar Manglam Pandey"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="headshot-placeholder">
+          <span class="ph-icon">📷</span>
+          <span>Add profile.jpg<br/>to your repo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-body reveal">
+        <p>
+          I am a <strong>Master's student in Computer Science (AI specialization) at York University</strong>, and I've been building and breaking software since 2016. Before research, I was the founding engineer of a live e-commerce platform, a Cisco technical consultant keeping enterprise networks alive across EMEA, and a solo developer who built databases before most people my age had written their first SQL query.
+        </p>
+        <p>
+          The thread that runs through all of it: I don't just want systems to <em>work</em>. I want to understand <em>why</em> they work — and more importantly, why they fail. That philosophy is what led me to graduate-level AI research. When the rest of the industry was chasing prompts, I went back to derive loss functions.
+        </p>
+        <p>
+          I thrive as an <strong>individual contributor</strong> — I'm comfortable owning a problem end-to-end with no hand-holding. I also do some of my best work inside teams, because I've learned that the most robust systems come from rigorous disagreement and shared ownership. I can do both, and I know when to switch.
+        </p>
+        <p>
+          Currently seeking a <strong>Summer 2026 co-op or internship</strong> in AI/ML research, software engineering, or data-focused roles — ideally somewhere that rewards curiosity more than credentials.
+        </p>
+      </div>
+
+      <div class="about-aside reveal reveal-delay-2">
+        <div class="aside-card">
+          <div class="aside-card-label">Currently studying under</div>
+          <ul class="prof-list">
+            <li>
+              <a href="https://www.yorku.ca/professor/tsotsos/" target="_blank" style="color:inherit;text-decoration:none;">Prof. John K. Tsotsos</a>
+              <span>Distinguished Research Professor of Vision Science · Fellow of the Royal Society of Canada, IEEE Life Fellow · Pioneer of Active Vision & Selective Tuning theory of visual attention · Lab: Active &amp; Attentive Vision</span>
+            </li>
+            <li>
+              <a href="https://lassonde.yorku.ca/users/lskalantari" target="_blank" style="color:inherit;text-decoration:none;">Prof. Laleh Seyyed-Kalantari</a>
+              <span>Assistant Professor · Vector Institute Faculty Affiliate · ResponsibleAI Lab · Research: AI safety, bias &amp; fairness in medical imaging, generative AI, foundation models · Google Research Scholar Award 2024</span>
+            </li>
+            <li>
+              <a href="https://www.eecs.yorku.ca/~uruth/" target="_blank" style="color:inherit;text-decoration:none;">Prof. Ruth Urner</a>
+              <span>Associate Professor · Research: mathematical foundations of ML, PAC learning theory, algorithmic fairness, active &amp; semi-supervised learning · Publications at ICML, NeurIPS, COLT, AISTATS</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="aside-card">
+          <div class="aside-card-label">Current Focus</div>
+          <p>
+            Formulating a cost-oriented POMDP framework for Search-and-Rescue autonomous agents — optimizing epistemic action selection between Active Vision and Manipulation under real-world resource constraints. The kind of problem where the math matters as much as the code.
+          </p>
+        </div>
+
+        <div class="aside-card">
+          <div class="aside-card-label">Available For</div>
+          <p>
+            Summer 2026 Co-op / Internship · Remote, Hybrid, or Onsite<br/>
+            Full-time work authorization in Canada
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SKILLS ────────────────────────────────────────────── -->
+  <section id="skills">
+    <div class="section-label">02 — Capabilities</div>
+    <h2 class="section-title">Built wide. <em>Going deep.</em></h2>
+    <div class="section-divider"></div>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">⚙️</div>
+        <h3>Core Engineering</h3>
+        <div class="skill-tags-list">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">C</span>
+          <span class="skill-pill">Bash</span>
+          <span class="skill-pill">Linux</span>
+          <span class="skill-pill">REST APIs</span>
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">MySQL</span>
+          <span class="skill-pill">PostgreSQL</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-1">
+        <div class="skill-card-icon">🤖</div>
+        <h3>ML & AI</h3>
+        <div class="skill-tags-list">
+          <span class="skill-pill">Scikit-learn</span>
+          <span class="skill-pill">TensorFlow</span>
+          <span class="skill-pill">HuggingFace</span>
+          <span class="skill-pill">NumPy</span>
+          <span class="skill-pill">Pandas</span>
+          <span class="skill-pill">Neural Networks</span>
+          <span class="skill-pill">SVM</span>
+          <span class="skill-pill">NLP</span>
+          <span class="skill-pill">LLM Concepts</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-2">
+        <div class="skill-card-icon">🔬</div>
+        <h3>AI Research</h3>
+        <div class="skill-tags-list">
+          <span class="skill-pill">POMDP</span>
+          <span class="skill-pill">Active Vision</span>
+          <span class="skill-pill">Computer Vision</span>
+          <span class="skill-pill">Fairness in ML</span>
+          <span class="skill-pill">VC Dimension</span>
+          <span class="skill-pill">Probabilistic Models</span>
+          <span class="skill-pill">Data Mining</span>
+          <span class="skill-pill">Jupyter</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-3">
+        <div class="skill-card-icon">🏗️</div>
+        <h3>Systems & Delivery</h3>
+        <div class="skill-tags-list">
+          <span class="skill-pill">Distributed Systems</span>
+          <span class="skill-pill">Network Debugging</span>
+          <span class="skill-pill">Packet Analysis</span>
+          <span class="skill-pill">Agile</span>
+          <span class="skill-pill">SDLC</span>
+          <span class="skill-pill">Documentation</span>
+          <span class="skill-pill">Mentoring</span>
+          <span class="skill-pill">CS-Cart</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── RESEARCH & PROJECTS ───────────────────────────────── -->
+  <section id="research">
+    <div class="section-label">03 — Research & Projects</div>
+    <h2 class="section-title">Things I've <em>actually built</em><br/>and why they matter.</h2>
+    <div class="section-divider"></div>
+
+    <div class="research-grid">
+      <div class="research-card reveal">
+        <div class="research-tag">🎓 MSc Research — York University</div>
+        <h3>Search-and-Rescue via Cost-Oriented POMDP</h3>
+        <p>
+          Formulating a decision-making algorithm for autonomous agents in search-and-rescue scenarios using Partially Observable Markov Decision Processes. The core problem: when should an agent look (Active Vision) versus act (Manipulation)? Both have costs. The algorithm optimizes that trade-off to minimize uncertainty under resource constraints.
+        </p>
+        <p>
+          Supervised under Prof. John K. Tsotsos — one of the founding figures in computational vision theory.
+        </p>
+        <span class="research-link">In progress · York University</span>
+      </div>
+
+      <div class="research-card reveal reveal-delay-1">
+        <div class="research-tag">🎓 Coursework — Fairness & Bias in AI</div>
+        <h3>Neural Network Debiasing on Adult Income Data</h3>
+        <p>
+          Quantified discriminatory bias in income-prediction neural networks using the UCI Adult dataset, measuring fairness metrics including TPR, FPR, and demographic parity across gender and racial groups. Then compared two distinct debiasing methodologies, evaluating the accuracy–fairness trade-off empirically.
+        </p>
+        <p>
+          Also gave a presentation on InterFair (Majumder et al., EMNLP 2023) — debiasing via natural language feedback.
+        </p>
+        <span class="research-link">York University · Winter 2026</span>
+      </div>
+
+      <div class="research-card reveal reveal-delay-2">
+        <div class="research-tag">⚡ Independent Project · 2024</div>
+        <h3>ML-Based Network Intrusion Detection</h3>
+        <p>
+          Built a supervised classification pipeline to detect anomalous network traffic — framing the intrusion detection problem correctly from the start (most implementations get the feature engineering wrong). Evaluated detection-accuracy vs. false-positive trade-offs under real-time feasibility constraints.
+        </p>
+        <a href="https://github.com/manglam8/DeSy" target="_blank" class="research-link">→ github.com/manglam8/DeSy</a>
+      </div>
+
+      <div class="research-card reveal reveal-delay-3">
+        <div class="research-tag">📈 Independent Project · 2024</div>
+        <h3>Stock Price Prediction — ANN Regression</h3>
+        <p>
+          Explored ANN-based regression on historical financial data, benchmarking multiple architectures on error and variance metrics. The interesting part wasn't the model — it was the preprocessing pipeline design and understanding why financial time-series data makes most naive models fail.
+        </p>
+        <a href="https://github.com/manglam8/stock-market-prediction-ANN" target="_blank" class="research-link">→ github.com/manglam8/stock-market-prediction-ANN</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EXPERIENCE ────────────────────────────────────────── -->
+  <section id="experience">
+    <div class="section-label">04 — Industry Experience</div>
+    <h2 class="section-title">4+ years of <em>real systems,</em><br/>real stakes.</h2>
+    <div class="section-divider"></div>
+
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-date">Dec 2018 – Oct 2020</div>
+        <div class="tl-role">Technical Consulting Engineer</div>
+        <div class="tl-company">Cisco Systems — EMEA Region</div>
+        <ul class="tl-bullets">
+          <li>Diagnosed and resolved complex routing, performance, and OS-level failures across enterprise, service-provider, and government networks spanning hundreds to thousands of devices.</li>
+          <li>Built Python automation scripts to parse large log datasets, correlate alerts, and trigger diagnostics — cutting manual analysis time and average resolution time by ~30%.</li>
+          <li>Authored internal documentation and onboarding guides that reduced ramp-up time for new engineers by ~20%; mentored 10+ new hires through structured technical training.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal reveal-delay-1">
+        <div class="tl-date">Dec 2016 – Dec 2018</div>
+        <div class="tl-role">Founding Engineer</div>
+        <div class="tl-company">CubeK Technologies Pte. Ltd. — electronicscrazy.sg</div>
+        <ul class="tl-bullets">
+          <li>Designed and built electronicscrazy.sg from zero — a full B2B/B2C e-commerce platform on CS-Cart, scaling to tens of thousands of users and ~80–100 daily orders within the first month.</li>
+          <li>Implemented a MySQL-backed inventory management system, eliminating manual workflows and improving operational reliability.</li>
+          <li>Integrated payment, logistics, analytics, and notification services via REST APIs; improved checkout conversion by ~15% through UX simplifications.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal reveal-delay-2">
+        <div class="tl-date">Aug 2016 – Dec 2016</div>
+        <div class="tl-role">MIS Executive</div>
+        <div class="tl-company">VerSe Innovation (DailyHunt)</div>
+        <ul class="tl-bullets">
+          <li>Wrote and optimized complex PostgreSQL queries on large-scale user engagement data (millions of rows) for management analytics.</li>
+          <li>Automated recurring MIS reports using Bash scripts and cron jobs, reducing reporting effort by ~50%.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── BEYOND CODE ───────────────────────────────────────── -->
+  <section id="personal">
+    <div class="section-label">05 — Beyond Code</div>
+    <h2 class="section-title">The human behind <em>the engineer.</em></h2>
+    <div class="section-divider"></div>
+
+    <div class="personal-grid">
+      <div class="chess-feature reveal">
+        <div class="mini-board"></div>
+        <div class="chess-rating-display">~1850</div>
+        <div class="chess-rating-label">Chess Rating · Lichess &amp; Chess.com</div>
+        <h3>Competitive Chess Player</h3>
+        <p>
+          Chess isn't just a hobby — it's how I think. The game demands the same skills I bring to engineering: pattern recognition, long-horizon planning, managing uncertainty, and knowing when to play aggressively versus when to be patient.
+        </p>
+        <p>
+          I'm representing <strong>York University</strong> in the <strong>Collegiate Chess League Spring 2026</strong> (online, chess.com). Getting to play for a university I joined two months ago felt like exactly the kind of thing I'd want to put on a portfolio.
+        </p>
+        <div class="chess-links">
+          <a href="https://lichess.org/@/manglam8" target="_blank" class="chess-badge">Lichess · manglam8</a>
+          <a href="https://www.chess.com/member/kmanglam8" target="_blank" class="chess-badge">Chess.com · kmanglam8</a>
+          <a href="https://www.chess.com/club/collegiate-chess-league" target="_blank" class="chess-badge">CCL Spring 2026</a>
+        </div>
+      </div>
+
+      <div class="hobbies-list reveal reveal-delay-2">
+        <div class="hobby-item">
+          <div class="hobby-icon">🍳</div>
+          <div class="hobby-text">
+            <h4>Cooking</h4>
+            <p>Same approach as coding: I improvise once I understand the fundamentals. No recipe needed when you know why the technique works.</p>
+          </div>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-icon">✈️</div>
+          <div class="hobby-text">
+            <h4>Travel</h4>
+            <p>Moving from India to Toronto was the most deliberate version of this. I think best when I'm somewhere new — different environments force different thinking.</p>
+          </div>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-icon">🎵</div>
+          <div class="hobby-text">
+            <h4>Music</h4>
+            <p>Wide listener. Music is the one domain where I happily don't need to understand the mechanism — just the feeling it creates.</p>
+          </div>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-icon">🚀</div>
+          <div class="hobby-text">
+            <h4>Sci-Fi &amp; Fiction</h4>
+            <p>The best science fiction asks "what if?" better than most research papers. My current obsession: stories where AI and humans are genuinely trying to understand each other.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ───────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-label" style="text-align:center; margin-bottom:1rem;">06 — Contact</div>
+      <h2 class="section-title reveal" style="font-size: clamp(2rem,5vw,3.5rem);">
+        Let's build something<br/><em>worth building.</em>
+      </h2>
+      <div class="section-divider" style="margin: 1.5rem auto 2rem;"></div>
+      <p class="contact-subtitle reveal">
+        Open to Summer 2026 co-op and internship opportunities in AI/ML, software engineering, and data — anywhere in the world.
+      </p>
+      <div class="contact-links reveal">
+        <a href="/cdn-cgi/l/email-protection#81ece0efe6ede0ecb9c1e6ece0e8edafe2eeec" class="contact-link">✉ Email</a>
+        <a href="https://linkedin.com/in/manglam8" target="_blank" class="contact-link">LinkedIn</a>
+        <a href="https://github.com/manglam8" target="_blank" class="contact-link">GitHub</a>
+        <a href="KumarManglamPandey_Resume_v2.docx" class="contact-link">Résumé</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────────── -->
+  <footer>
+    <p>© 2026 Kumar Manglam Pandey</p>
+    <p>Designed &amp; built by <span>KMP</span> — because of course it was.</p>
+  </footer>
+
+  <!-- ─── SCROLL REVEAL ─────────────────────────────────────── -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer
